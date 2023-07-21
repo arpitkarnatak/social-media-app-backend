@@ -10,7 +10,7 @@ passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(async function (user: any, done) {
+passport.deserializeUser(async function (user: IAuthenticatedUser, done) {
   try {
     done(null, user);
   } catch (err) {

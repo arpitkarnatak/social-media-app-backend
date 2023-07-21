@@ -1,16 +1,20 @@
 import { Router } from "express";
-import { isAuthenticated } from "../../middleware/isAuthenticated";
+import {
+  getAuthenticatedUser,
+  isAuthenticated,
+} from "../../middleware/isAuthenticated";
 import DB from "../../prisma";
 import { uuid } from "uuidv4";
 
 const router = Router();
 
 router.post("/create", isAuthenticated, async (req, res) => {
-  console.log("RR", req.user, req.user?.id);
-  const { params } = req.body;
-
   try {
-    await createPost(req?.user?.id, params.title, params.body);
+    const { params } = req.body;
+    const user = getAuthenticatedUser(req.user);
+    if (!!!user) throw new Error("No User found");
+    
+    await createPost(user?.id, params.title, params.body);
     return res.status(200).json({
       success: true,
     });
@@ -21,6 +25,8 @@ router.post("/create", isAuthenticated, async (req, res) => {
     });
   }
 });
+
+router.patch("/post", isAuthenticated, async (req, res) => {});
 
 router.get("/", async (req, res) => {
   try {
@@ -51,7 +57,6 @@ export async function getPosts(
     },
     orderBy: [{ createdAt: "desc" }],
   });
-  console.log("All posts", data);
   return data;
 }
 
@@ -60,13 +65,6 @@ export async function createPost(
   title: string,
   body: string
 ) {
-  /* id            String @id @unique
-    author        Profile @relation(fields: [authorUserId], references: [id])
-    authorUserId  String
-    title         String
-    body          String
-    createdAt     DateTime @default(now())
-    comments      Comment[] */
   const postObjectBody = {
     id: uuid(),
     authorUserId,
