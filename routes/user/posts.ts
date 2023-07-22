@@ -65,8 +65,9 @@ export async function createPost(
   title: string,
   body: string
 ) {
+  const postId = title.split(" ").join("-")+`-${uuid()}`
   const postObjectBody = {
-    id: uuid(),
+    id: postId,
     authorUserId,
     title,
     body,

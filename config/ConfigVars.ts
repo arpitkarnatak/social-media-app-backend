@@ -7,4 +7,5 @@ export const {
   GOOGLE_CLIENT_SECRET = "",
   COOKIES_SECRET = "some_secret",
   FRONTEND_URL = "",
+  BACKEND_URL = "",
 } = process.env;
