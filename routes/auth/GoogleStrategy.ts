@@ -1,6 +1,7 @@
 import { Strategy } from "passport-google-oauth20";
 import DB from "../../prisma";
 import {
+  BACKEND_URL,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
 } from "../../config/ConfigVars";
@@ -9,7 +10,7 @@ export const GoogleStrategy = new Strategy(
   {
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: `http://localhost:8080/auth/google/callback`,
+    callbackURL: `${BACKEND_URL}/auth/google/callback`,
     scope: ["profile"],
   },
   async function (accessToken, refreshToken, profile, cb) {
