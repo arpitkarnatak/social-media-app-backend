@@ -14,6 +14,7 @@ passport.deserializeUser(async function (user: IAuthenticatedUser, done) {
   try {
     done(null, user);
   } catch (err) {
+    console.log("Error: ", err)
     done(err, null);
   }
 });
@@ -31,6 +32,7 @@ router.get(
 router.get("/logout", function (req, res, next) {
   req.logout(function (err) {
     if (err) {
+      console.log("Error: ", err)
       return next(err);
     }
     res.redirect(FRONTEND_URL);

@@ -19,6 +19,7 @@ router.post("/create", isAuthenticated, async (req, res) => {
       success: true,
     });
   } catch (err) {
+    console.log("Error: ", err)
     return res.status(500).json({
       success: false,
       message: "An unknow error occured.",
@@ -36,6 +37,7 @@ router.get("/", async (req, res) => {
       data: posts,
     });
   } catch (err) {
+    console.log("Error: ", err)
     return res.status(500).json({
       success: false,
       message: "An unknow error occured.",
