@@ -36,7 +36,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     proxy: true,
-    cookie: {} ?? { sameSite: "none", secure: true },
+    cookie: process.env.NODE_ENV === "prod" ? { sameSite: "none", secure: true } : {},
   })
 );
 app.use(passport.session())
