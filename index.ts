@@ -11,7 +11,7 @@ import passport from "passport";
 import express from "express";
 import dotenv from "dotenv"
 import { UserRouter } from "./routes/user";
-import { COOKIES_SECRET, FRONTEND_URL } from "./config/ConfigVars";
+import { BACKEND_URL, COOKIES_SECRET, FRONTEND_URL } from "./config/ConfigVars";
 
 dotenv.config();
 
@@ -36,7 +36,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     proxy: true,
-    cookie: process.env.NODE_ENV === "prod" ? { sameSite: "none", secure: true } : {},
+    cookie: process.env.NODE_ENV ? { sameSite: "none", secure: true, domain: BACKEND_URL } : {},
   })
 );
 app.use(passport.session())
