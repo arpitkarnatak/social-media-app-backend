@@ -33,10 +33,13 @@ app.use(
 app.use(
   session({
     secret: COOKIES_SECRET,
-    resave: true,
-    saveUninitialized: true,
+
+    resave: false,
+
+    saveUninitialized: false,
+
     proxy: true,
-    cookie: process.env.NODE_ENV ? { sameSite: "none", secure: true, domain: BACKEND_URL } : {},
+    cookie: process.env.NODE_ENV ? { sameSite: "none", secure: true } : {},
   })
 );
 app.use(passport.session())
