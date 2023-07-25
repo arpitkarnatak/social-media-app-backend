@@ -9,7 +9,7 @@ import { isAuthenticated } from "./middleware/isAuthenticated";
 import cors from "cors";
 import passport from "passport";
 import express from "express";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import { UserRouter } from "./routes/user";
 import { BACKEND_URL, COOKIES_SECRET, FRONTEND_URL } from "./config/ConfigVars";
 
@@ -24,32 +24,33 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: [
-      FRONTEND_URL
-    ],
+    origin: [FRONTEND_URL],
     optionsSuccessStatus: 200,
     credentials: true,
-  }));
+  })
+);
 app.use(
   session({
     secret: COOKIES_SECRET,
-
-    resave: false,
-
-    saveUninitialized: false,
-
+    resave: true,
+    saveUninitialized: true,
     proxy: true,
-    cookie: process.env.NODE_ENV ? { sameSite: "none", secure: true } : {},
+    cookie: process.env.NODE_ENV
+      ? {
+          sameSite: "none",
+          secure: true,
+          domain: `${BACKEND_URL.replace("https://", "")}`,
+        }
+      : {},
   })
 );
-app.use(passport.session())
-
+app.use(passport.session());
 
 app.get("/", async (req: Request, res: Response) => {
-  return res.json({message: "Hello"});
+  return res.json({ message: "Hello" });
 });
 
-app.use("/user", UserRouter)
+app.use("/user", UserRouter);
 app.use("/auth", authRouter);
 
 app.listen(port, () => {
