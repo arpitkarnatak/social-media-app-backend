@@ -12,6 +12,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { UserRouter } from "./routes/user";
 import { BACKEND_URL, COOKIES_SECRET, FRONTEND_URL } from "./config/ConfigVars";
+import { endpoints } from "./routes";
 
 dotenv.config();
 
@@ -50,8 +51,7 @@ app.get("/", async (req: Request, res: Response) => {
   return res.json({ message: "Hello" });
 });
 
-app.use("/user", UserRouter);
-app.use("/auth", authRouter);
+app.use(endpoints);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

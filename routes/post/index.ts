@@ -8,7 +8,7 @@ import { uuid } from "uuidv4";
 
 const router = Router();
 
-router.post("/create", isAuthenticated, async (req, res) => {
+router.post("", isAuthenticated, async (req, res) => {
   try {
     const { params } = req.body;
     const user = getAuthenticatedUser(req.user);
@@ -43,6 +43,10 @@ router.get("", async (req, res) => {
     });
   }
 });
+
+
+export { router as PostRouter };
+
 
 export async function getPosts(
   userId?: string,
@@ -89,4 +93,3 @@ export async function createPost(
   return response;
 }
 
-export { router as PostRouter };
