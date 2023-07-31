@@ -29,8 +29,8 @@ router.post("", isAuthenticated, async (req, res) => {
 
 router.get("", async (req, res) => {
   try {
-    const { userId } = req.query;
-    const posts = await getPosts(userId as string);
+    const { userId, postId } = req.query;
+    const posts = await getPosts(userId as string, postId as string);
     return res.status(200).json({
       success: true,
       data: posts,
@@ -48,12 +48,23 @@ router.get("", async (req, res) => {
 export { router as PostRouter };
 
 
+
+function buildUserClause(params: [string, any | undefined][]) {
+  const paramsForClause = params.filter(([_, value]) => !!value)
+  const entries = new Map(paramsForClause)
+  return Object.fromEntries(entries)
+}
+
 export async function getPosts(
   userId?: string,
+  postId?: string,
   page?: Number,
   offset?: Number
 ) {
-  const whereClause = !!userId ? { authorUserId: userId } : {};
+  const whereClause = buildUserClause([
+    ['authorUserId', userId,],
+    ['id', postId]
+  ]);
   const data = await DB.post.findMany({
     where: whereClause,
     include: {
@@ -62,7 +73,7 @@ export async function getPosts(
         orderBy: [{ createdAt: "desc" }],
       },
     },
-    orderBy: [{ createdAt: "desc" }],
+    orderBy: [{ createdAt: "desc" }]
   });
   return data;
 }
