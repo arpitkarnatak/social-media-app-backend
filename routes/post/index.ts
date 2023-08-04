@@ -69,9 +69,6 @@ export async function getPosts(
     where: whereClause,
     include: {
       author: true,
-      comments: {
-        orderBy: [{ createdAt: "desc" }],
-      },
     },
     orderBy: [{ createdAt: "desc" }]
   });
