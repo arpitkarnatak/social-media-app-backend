@@ -95,7 +95,8 @@ async function getComments(
             },
             include: {
                 author: true
-            }
+            },
+            orderBy: [{ createdAt: "desc" }]
         })
     } catch(err) {
         console.error("Err", err)

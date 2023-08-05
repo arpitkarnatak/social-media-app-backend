@@ -10,6 +10,7 @@ datasource db {
 
 model Profile {
   id            String @id @unique
+  bio           String?
   displayName   String @default("")
   username      String @unique
   avatar        String @default("")
