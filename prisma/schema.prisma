@@ -17,6 +17,18 @@ model Profile {
   posts         Post[] 
   comments      Comment[]
   createdAt     DateTime @default(now())
+  followers     Follows[] @relation("following")
+  following     Follows[] @relation("follower")
+  followerCount  Int? @default(0)
+  followingCount Int? @default(0)
+}
+
+model Follows {
+  follower      Profile @relation("follower", fields: [followerId], references: [id])
+  followerId    String
+  following     Profile @relation("following", fields: [followingId], references: [id])
+  followingId   String
+  @@id([followerId, followingId])
 }
 
 model Post {

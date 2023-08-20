@@ -6,4 +6,6 @@ interface IAuthenticatedUser {
   posts: any[];
   comments: any[];
   createdAt: string;
+  followerCount: number;
+  followingCount: number;
 }

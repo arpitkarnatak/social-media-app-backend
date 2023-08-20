@@ -63,7 +63,7 @@ export async function getPosts(
 ) {
   const whereClause = buildUserClause([
     ['authorUserId', userId,],
-    ['id', postId]
+    ['id', postId],
   ]);
   const data = await DB.post.findMany({
     where: whereClause,

@@ -5,12 +5,10 @@ import session from "express-session";
 import { Request, Response } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { isAuthenticated } from "./middleware/isAuthenticated";
 import cors from "cors";
 import passport from "passport";
 import express from "express";
 import dotenv from "dotenv";
-import { UserRouter } from "./routes/user";
 import { BACKEND_URL, COOKIES_SECRET, FRONTEND_URL } from "./config/ConfigVars";
 import { endpoints } from "./routes";
 
