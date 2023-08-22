@@ -26,7 +26,6 @@ app.use(
     origin: [FRONTEND_URL],
     optionsSuccessStatus: 200,
     credentials: true,
-    exposedHeaders: ['set-cookie']
   })
 );
 app.use(
@@ -35,6 +34,7 @@ app.use(
     saveUninitialized : false,
     resave : true,
     proxy: true,
+    name: 'connect.sid',
     cookie: process.env.NODE_ENV
       ? {
           sameSite: "none",
