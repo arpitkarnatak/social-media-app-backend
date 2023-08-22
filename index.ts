@@ -26,13 +26,14 @@ app.use(
     origin: [FRONTEND_URL],
     optionsSuccessStatus: 200,
     credentials: true,
+    exposedHeaders: ['set-cookie']
   })
 );
 app.use(
   session({
     secret: COOKIES_SECRET,
-    resave: true,
-    saveUninitialized: true,
+    saveUninitialized : false,
+    resave : true,
     proxy: true,
     cookie: process.env.NODE_ENV
       ? {
