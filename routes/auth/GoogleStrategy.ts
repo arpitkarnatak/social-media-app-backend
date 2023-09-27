@@ -1,10 +1,12 @@
 import { Strategy } from "passport-google-oauth20";
-import DB from "../../prisma";
 import {
   BACKEND_URL,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
 } from "../../config/ConfigVars";
+import DB from "../../controller/database"
+import {use} from "passport";
+import DBController from "../../controller/database";
 
 export const GoogleStrategy = new Strategy(
   {
@@ -20,17 +22,8 @@ export const GoogleStrategy = new Strategy(
       displayName: profile.displayName,
       avatar: profile._json.picture,
     };
-    await DB.profile.upsert({
-      where: {
-        id: profile.id,
-      },
-      update: {
-        displayName: profile.displayName,
-        avatar: profile._json.picture,
-      },
-      create: userObject,
-    });
 
+    await DBController.getInstance().insertOrRetrieveUser(userObject)
     return cb(null, userObject);
   }
 );
